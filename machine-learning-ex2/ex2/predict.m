@@ -15,11 +15,11 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
+v = X * theta;
 
-
-
-
-
+for i=1:size(v)
+	p(i) = ( v(i) >=0 * 1);
+endfor
 
 % =========================================================================
 
