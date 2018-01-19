@@ -22,9 +22,9 @@ W = zeros(L_out, 1 + L_in);
 
 
 
+INIT_EPSILON = 0.1;
 
-
-
+W = 2 * INIT_EPSILON .* (rand(L_out, 1 + L_in)) - INIT_EPSILON;
 
 
 % =========================================================================

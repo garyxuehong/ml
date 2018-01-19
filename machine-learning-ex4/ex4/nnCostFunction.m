@@ -64,9 +64,9 @@ Theta2_grad = zeros(size(Theta2));
 
 
 Z1 = Theta1 * ([ones(m, 1), X]');
-A1 = sigmoid(Z1);
+A1 = sigmoid(Z1)'; % size(A1) is m x hidden_layer_size
 
-Z2 = Theta2 * ([ones(1, m); A1]);
+Z2 = Theta2 * ([ones(m, 1), A1]');
 A2 = sigmoid(Z2)'; % size(A2) is m x num_labels
 
 logA2 = log(A2);
@@ -89,21 +89,16 @@ J = -(1/m)*sum(sum(Y.*logA2 + (1 - Y).*log1minuxA2)) + (lambda/(2*m)) * (sumRegT
 
 
 
+for t=1:m
+	delta2 = (A2(t,:) - Y(t,:))';
+	delta1 = ((Theta2') * delta2) .* [1;A1(t,:)'] .* (1 - [1;A1(t,:)']);
+	Theta2_grad = Theta2_grad + delta2 * [1,A1(t,:)];
+	Theta1_grad = Theta1_grad + delta1(2:end) * [1,X(t,:)];
+end
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad = Theta1_grad ./ m;
+Theta2_grad = Theta2_grad ./ m;
 
 
 % -------------------------------------------------------------
