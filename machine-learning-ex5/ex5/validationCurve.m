@@ -1,5 +1,5 @@
 function [lambda_vec, error_train, error_val] = ...
-    validationCurve(X, y, Xval, yval)
+    validationCurve(X, y, X_val, y_val)
 %VALIDATIONCURVE Generate the train and validation errors needed to
 %plot a validation curve that we can use to select lambda
 %   [lambda_vec, error_train, error_val] = ...
@@ -38,7 +38,22 @@ error_val = zeros(length(lambda_vec), 1);
 %       end
 %
 %
+	
+	m = size(X, 1);
+	m_val = size(X_val);
 
+      for i = 1:length(lambda_vec)
+    
+        lambda = lambda_vec(i);
+
+		[theta_i] = trainLinearReg([ones(m, 1) X], y, lambda);
+		J_train = linearRegCostFunction([ones(m, 1) X], y, theta_i, 0);
+		J_val = linearRegCostFunction([ones(m_val, 1) X_val], y_val, theta_i, 0);
+
+		error_train(i) = J_train;
+		error_val(i) = J_val;
+          
+      end
 
 
 
