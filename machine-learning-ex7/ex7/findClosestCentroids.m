@@ -21,11 +21,18 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+T = zeros(size(X,1), K);
 
+for i=1:K
+    A = X - centroids(i,:);
+    A = A .* A;
+    A = sum(A, 2);
+    T(:,i) = A;
+end
 
+[W, IW] = min(T, [], 2);
 
-
-
+idx = IW;
 
 % =============================================================
 
