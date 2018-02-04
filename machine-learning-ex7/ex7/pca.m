@@ -20,11 +20,15 @@ S = zeros(n);
 %       number of examples).
 %
 
+covarX = zeros(n, n);
 
+for i=1:m
+    covarX = covarX + (X(i,:)' * X(i,:));
+end
 
+covarX = covarX / m;
 
-
-
+[U, S, V] = svd(covarX);
 
 % =========================================================================
 
